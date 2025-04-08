@@ -1,18 +1,33 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Lock, Loader } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Input from "../components/Input";
+import { useAuthStore } from "../store/authStore";
+import toast from "react-hot-toast";
 // import { useAuthStore } from "../store/authStore";
 
 const LoginPage = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const navigate = useNavigate();
+
+	
+	const {error, login, isLoading } = useAuthStore();
 
 
-
-
-
+	const handleLogin = async (e) => {
+		e.preventDefault();
+		try {
+			const success = await login(email, password);
+			if (success) {
+				toast.success("Welcome Back");
+				navigate("/");  // Redirect to home page after successful login
+			}
+		} catch (error) {
+			console.error("Login error:", error);
+		}
+	}
 
 
 
