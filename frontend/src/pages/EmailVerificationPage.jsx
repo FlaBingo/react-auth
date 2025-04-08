@@ -20,8 +20,8 @@ function EmailVerificationPage() {
 			const success = await verifyEmail(verificationCode);
 			if(success){
 				navigate("/")
+				toast.success("Email verified successfully")
 			}
-			toast.success("Email verified successfully")
 		} catch (error) {
 			console.error(error)
 		}
