@@ -107,7 +107,7 @@ export const verifyEmail = async (req, res) => {
       }
     })
   } catch (error) {
-    console.error("Error in verifyEmail controller")
+    console.error("Error in verifyEmail controller ", error.message)
     res.status(500).json({success:false, message: "Server Error"})
   }
 }
