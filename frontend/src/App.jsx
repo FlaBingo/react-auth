@@ -85,6 +85,9 @@ function App() {
               <ResetPasswordPage />
             </RedirectAuthenticatedUser>
           } />
+          <Route path="*" element={
+            <Navigate to="/" replace />
+          } />
 
         </Routes>
 
