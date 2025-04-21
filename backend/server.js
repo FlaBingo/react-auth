@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 5000;
 // }))
 app.use(cors({
     origin: process.env.NODE_ENV === "production" 
-        ? [process.env.CLIENT_URL, "https://react-auth-n3o06l8pu-satyams-projects-1c5fbbae.vercel.app"]
+        ? [process.env.CLIENT_URL, "https://react-auth-satyams-projects-1c5fbbae.vercel.app"]
         : "http://localhost:5173",
     credentials: true
 }));
