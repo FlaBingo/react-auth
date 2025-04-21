@@ -1,17 +1,48 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { motion } from 'framer-motion';
+import { useAuthStore } from '../store/authStore';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Lock } from 'lucide-react';
+import toast from 'react-hot-toast';
+import Input from '../components/Input';
 
 function ResetPasswordPage() {
+	const [password, setPassword] = useState("")
+	const [confirmPassword, setConfirmPassword] = useState("")
+	const { resetPassword, message, error, isLoading } = useAuthStore();
+
+	const { token } = useParams();
+	const navigate = useNavigate();
+
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		if (!password || !confirmPassword) {
+            toast.error("Please fill all fields");
+            return;
+        }
+		if (password !== confirmPassword) {
+			alert("Password do not match.")
+			return;
+		}
+		try {
+			// console.log(token, password)
+			await resetPassword(token, password);
+			toast.success("Password reset successfully. redirecting to login Page...")
+			setTimeout(() => {
+				navigate("/login")
+			}, 2000)
+		} catch (error) {
+			console.log(error)
+			toast.error(error.message || "Error resetting password")
+		}
+	}
 
 
 
 
 
-
-
-
-
-    
-    return (
+	return (
 		<motion.div
 			initial={{ opacity: 0, y: 20 }}
 			animate={{ opacity: 1, y: 0 }}

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion';
-import Input from '../components/Input';
+import Input from '../components/Input.jsx';
 import { ArrowLeft, Loader, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useAuthStore } from '../store/authStore';
+import { useAuthStore } from '../store/authStore.js';
 
 function ForgotPasswordPage() {
 
@@ -13,9 +13,10 @@ function ForgotPasswordPage() {
 	const { isLoading, forgotPassword} = useAuthStore();
 
 	const handleSubmit = async (e) => {
-		e.preventDefault();
+		e.preventDefault(); 
 		try {
 			await forgotPassword(email)
+			setIsSubmitted(true)
 		} catch (error) {
 			console.log(error)
 		}

@@ -9,6 +9,7 @@ import { useAuthStore } from "./store/authStore.js";
 import LoadingSpinner from "./components/LoadingSpinner.jsx"
 import DashboardPage from "./pages/DashboardPage.jsx"
 import ForgotPasswordPage from "./pages/ForgotPasswordPage.jsx"
+import ResetPasswordPage from "./pages/ResetPasswordPage.jsx";
 
 
 const ProtectedRoute = ({children}) => {
@@ -55,6 +56,7 @@ function App() {
         <FloatingShape color="bg-lime-500" size="w-32 h-32" top="40%" left="-10%" delay={2} />
 
         <Routes>
+          
           <Route path="/" element={
             <ProtectedRoute>
               <DashboardPage />
@@ -78,6 +80,12 @@ function App() {
               <ForgotPasswordPage />
             </RedirectAuthenticatedUser>
           } />
+          <Route path="/reset-password/:token" element={
+              <RedirectAuthenticatedUser>
+              <ResetPasswordPage />
+            </RedirectAuthenticatedUser>
+          } />
+
         </Routes>
 
         <Toaster />

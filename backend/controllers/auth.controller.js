@@ -140,11 +140,14 @@ export const forgotPassword = async (req, res) => {
 }
 
 export const resetPassword = async (req, res) => {
-  const { resetToken } = req.params;
+  const { token } = req.params;
   const { password } = req.body;
 
   try {
-    const user = await User.findOne({ resetPasswordToken: resetToken, resetPasswordExpiresAt: { $gt: Date.now() } })
+    // if (password.length < 8) return res.json({ success: false, message: "password should be greater than or equal to 8" })
+    console.log(password, typeof password)
+    console.log(token, typeof token)
+    const user = await User.findOne({ resetPasswordToken: token, resetPasswordExpiresAt: { $gt: Date.now() } })
     if (!user) return res.status(400).json({ success: false, message: "Invaid or expired reset token" })
 
     //update password
