@@ -1,10 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 
-const API_URL =
-  process.env.NODE_ENV === "production"
-    ? `${import.meta.env.VITE_SERVER_URL}/api/auth`
-    : "http://localhost:5000/api/auth";
+const API_URL = `${import.meta.env.VITE_SERVER_URL}/api/auth`;
 
 axios.defaults.withCredentials = true;
 
