@@ -11,17 +11,24 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 
+mongoose.set('strictQuery', false);
+
+// Middleware
 app.use(cors({
     origin: process.env.CLIENT_URL || "http://localhost:5173",
-    credentials: true
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
+app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.use(cookieParser()) // allow us to parse the incoming cookies
-app.use(express.urlencoded({extended: true}))
-app.use(express.json())
-
-app.use("/api/auth", authRoutes);
+app.use("/api/auth", async (req, res, next) => {
+    await connectDB().catch(console.error);
+    next();
+}, authRoutes);
 
 // for the production start
 if(process.env.NODE_ENV === "production"){
