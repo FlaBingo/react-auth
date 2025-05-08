@@ -4,6 +4,7 @@ import { connectDB } from "./db/connectDB.js";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.route.js"
 import cors from "cors";
+import mongoose from "mongoose";
 import path from "path" // production
 const __dirname = path.resolve(); // production
 dotenv.config();
@@ -30,23 +31,10 @@ app.use("/api/auth", async (req, res, next) => {
     next();
 }, authRoutes);
 
-// for the production start
-if(process.env.NODE_ENV === "production"){
-    app.use(express.static(path.join(__dirname, "../frontend/dist")))
-    app.get("*", (req, res) => {
-        res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"))
-    })
-}else {
-    app.get('/', (req, res) => {
-        res.send('API is running');
-    });
-}
+// Health check route
+app.get('/api/health', (req, res) => {
+    res.json({ status: 'ok', timestamp: new Date() });
+});
 
-//end
-
-app.listen(PORT, () => {
-    connectDB();
-    console.log(`Server is running on port ${PORT}`)
-})
 
 export default app;
