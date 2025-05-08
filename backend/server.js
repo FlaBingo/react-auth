@@ -11,14 +11,8 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 
-// app.use(cors({
-//     origin: "http://localhost:5173",
-//     credentials: true
-// }))
 app.use(cors({
-    origin: process.env.NODE_ENV === "production" 
-        ? [process.env.CLIENT_URL, "https://react-auth-satyams-projects-1c5fbbae.vercel.app"]
-        : "http://localhost:5173",
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
     credentials: true
 }));
 
@@ -31,9 +25,9 @@ app.use("/api/auth", authRoutes);
 
 // for the production start
 if(process.env.NODE_ENV === "production"){
-    app.use(express.static(path.join(__dirname, "/frontend/dist")))
+    app.use(express.static(path.join(__dirname, "../frontend/dist")))
     app.get("*", (req, res) => {
-        res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"))
+        res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"))
     })
 }else {
     app.get('/', (req, res) => {
